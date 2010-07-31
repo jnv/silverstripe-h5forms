@@ -46,11 +46,13 @@ class H5FormField extends FormField {
 	 * Construct and return HTML tag.
 	 * 
 	 * @todo Transform to static helper method.
+	 * @todo More proper check whether the tag is a formfield (and required should be given to it)
+	 * @todo Prevent repetition of construction of common attributes (class, id, name) in subclasses
 	 */
 	function createTag($tag, $attributes, $content = null) {
 		$preparedAttributes = '';
 
-		if($tag == 'input' && $this->Required())
+		if($tag != 'span' && $this->Required())
 			$this->setAttribute('required', 'required');
 
 		$attributes = array_merge($attributes, $this->attributes);
