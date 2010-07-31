@@ -35,9 +35,6 @@ class H5FormField extends FormField {
 			'tabindex' => $this->getTabIndex()
 		);
 
-		if($this->Required())
-			$this->setAttribute('required', 'required');
-
 		$containerSpan = $this->createTag('span', $attributes, $value);
 		$hiddenInput = $this->createTag('input', $hiddenAttributes);
 		
@@ -53,7 +50,10 @@ class H5FormField extends FormField {
 	function createTag($tag, $attributes, $content = null) {
 		$preparedAttributes = '';
 
-		array_merge($attributes, $this->attributes);
+		if($tag == 'input' && $this->Required())
+			$this->setAttribute('required', 'required');
+
+		$attributes = array_merge($attributes, $this->attributes);
 		foreach($attributes as $k => $v) {
 			// Note: as indicated by the $k == value item here; the decisions over what to include in the attributes can sometimes get finicky
 			if(!empty($v) || $v === '0' || $k == 'value') $preparedAttributes .= " $k=\"" . Convert::raw2att($v) . "\"";
