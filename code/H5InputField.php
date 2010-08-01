@@ -7,19 +7,38 @@ class H5InputField extends H5FormField
 {
 
 	/**
+	 * @var Int
+	 */
+	protected $maxLength;
+	/**
 	 * @var String
 	 */
 	protected $inputType = 'text';
 
 	/**
+	 * @param Int $length
+	 */
+	function setMaxLength($length)
+	{
+		$this->maxLength = $length;
+	}
+
+	/**
+	 * @return Int
+	 */
+	function getMaxLength()
+	{
+		return $this->maxLength;
+	}
+
+	/**
 	 * Returns an input field, class="text" and type="text" with an optional maxlength
 	 */
-	function __construct($name, $title = null, $value = "", $type = '', $maxLength = null, $form = null)
+	function __construct($name, $title = null, $value = "", $maxLength = null, $form = null)
 	{
+		$this->maxLength = $maxLength;
 
-		if(!empty($type)) $this->inputType = $type;
-
-		parent::__construct($name, $title, $value, $maxLength, $form);
+		parent::__construct($name, $title, $value, $form);
 
 		$this->addExtraClass('text');
 	}
@@ -56,6 +75,12 @@ class H5InputField extends H5FormField
 		if($this->disabled) $localAtts['disabled'] = 'disabled';
 
 		return $this->createTag('input', $localAtts);
+	}
+
+	function InternallyLabelledField()
+	{
+		if(!$this->value) $this->value = $this->Title();
+		return $this->Field();
 	}
 
 }
