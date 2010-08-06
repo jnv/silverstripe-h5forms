@@ -22,6 +22,16 @@ class H5NumberField extends H5InputField
 		$this->max = $max;
 	}
 
+	function getMin()
+	{
+		return $this->min;
+	}
+
+	function getMax()
+	{
+		return $this->max;
+	}
+
 	function Field()
 	{
 		if($this->min) $this->setAttribute('min', $this->min);
@@ -76,20 +86,21 @@ JS;
 			if(is_numeric(trim($this->value)))
 			{
 				$state = true;
-				$msg = 'Number %s ';
+				$message = 'Number %s ';
 				$type = 'H5NumberField.RANGE_';
 				$limit = NULL;
+
 				if($this->min && ($this->value < $this->min))
 				{
 					$state = false;
-					$msg.= 'is lower than %s.';
+					$message.= 'is lower than %s.';
 					$type.= 'LOW';
 					$limit = $this->min;
 				}
 				if($state && $this->max && ($this->value > $this->max))
 				{
 					$state = false;
-					$msg.= 'is higher than %s.';
+					$message.= 'is higher than %s.';
 					$type.= 'HIGH';
 					$limit = $this->max;
 				}
